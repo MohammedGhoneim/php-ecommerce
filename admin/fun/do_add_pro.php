@@ -1,0 +1,41 @@
+
+<?php
+
+
+$name = $_POST['name'];
+$price = $_POST['price'];
+$count = $_POST['count'];
+$des = $_POST['des'];
+@$brand = $_POST['brand'];
+@$cat = $_POST['cat'];
+
+
+$img_name = $_FILES['image']['name'];
+$img_tmp = $_FILES['image']['tmp_name'];
+$img_size = $_FILES['image']['size'];
+
+$img_exp= explode(".",$img_name);
+$img_ext = end($img_exp);
+
+$allow_ext = ["jpg","jpeg","gif","bmb","png"];
+
+if (!in_array($img_ext  , $allow_ext)) {
+    echo "image type error";
+    exit();
+}
+if ($img_size > 3000000) {
+        echo "file is big";
+        exit();
+}
+
+$new_img_name = time().rand(1,100000) . $img_name;
+
+move_uploaded_file($img_tmp,"../img/$new_img_name");
+
+include("conn.php");
+
+$insert ="INSERT INTO `products`( `name`, `price`, `count`, `des`, `brand`, `cat`, `image`) VALUES ('$name','$price','$count','$des','$brand','$cat','$new_img_name')" ;
+
+$con -> query($insert);
+
+header("location:../products.php");

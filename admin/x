@@ -1,0 +1,7 @@
+
+// $num = $result -> num_rows;
+// if($num>0){
+// 	$_SESSION['login'] = $user;
+// 	header("location:dashboard.php");
+
+// }
